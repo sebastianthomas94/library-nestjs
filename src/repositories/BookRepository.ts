@@ -30,7 +30,10 @@ export default class BookRepository {
       }
       return book;
     } catch (error) {
-      console.error('Error retrieving book:', error);
+      console.error('Error retrieving book:', error.message);
+      if (error.status == 404) {
+        throw new NotFoundException(`Book with ID ${id} not found`);
+      }
       throw new InternalServerErrorException('Error retrieving book');
     }
   }
@@ -62,6 +65,9 @@ export default class BookRepository {
       return updatedBook;
     } catch (error) {
       console.error('Error updating book:', error);
+      if (error.status == 404) {
+        throw new NotFoundException(`Book with ID ${id} not found`);
+      }
       throw new InternalServerErrorException('Error updating book');
     }
   }
@@ -75,6 +81,9 @@ export default class BookRepository {
       }
     } catch (error) {
       console.error('Error deleting book:', error.message);
+      if (error.status == 404) {
+        throw new NotFoundException(`Book with ID ${id} not found or does not exist`);
+      }
       throw new InternalServerErrorException('Error deleting book');
     }
   }
