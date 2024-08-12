@@ -10,7 +10,7 @@ export class Author extends Document {
   biography?: string;
 
   @Prop({ required: true })
-  birthdate: string;
+  birthdate: Date;
 }
 
 export const AuthorSchema = SchemaFactory.createForClass(Author);
