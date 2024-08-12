@@ -1,52 +1,49 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { BookService } from './book.service';
-import { Book } from 'src/schema/Book.schema';
-import { CreateBookDto } from 'src/dto/CreateBookDto';
-import { UpdateBookDto } from 'src/dto/UpdateBookDto';
+import { CreateBookDto } from '../dto/CreateBookDto';
+import { UpdateBookDto } from '../dto/UpdateBookDto';
 
-@Controller('book')
+@ApiTags('Books')
+@Controller('books')
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 
-  @Get() // Get all books
-  getBooks(): Promise<Book[]> {
+  @Get()
+  @ApiOperation({ summary: 'Get all books' })
+  @ApiResponse({ status: 200, description: 'List of books' })
+  getBooks() {
     return this.bookService.getBooks();
   }
 
-  @Get(':id') // Get one book
-  getBook(@Param('id') id: string): Promise<Book> {
+  @Get(':id')
+  @ApiOperation({ summary: 'Get a book by ID' })
+  @ApiResponse({ status: 200, description: 'Book details' })
+  @ApiResponse({ status: 404, description: 'Book not found' })
+  getBook(@Param('id') id: string) {
     return this.bookService.getBookById(id);
   }
 
-  @Post() // Add one book
-  @UsePipes(new ValidationPipe({ transform: true })) //validation of date
-  async addBook(@Body() book: CreateBookDto): Promise<Book> {
-    await this.bookService.checkIfAuthorExist(book.authorId);
-    return this.bookService.addBook(book);
+  @Post()
+  @ApiOperation({ summary: 'Add a new book' })
+  @ApiResponse({ status: 201, description: 'Book created' })
+  addBook(@Body() createBookDto: CreateBookDto) {
+    return this.bookService.addBook(createBookDto);
   }
 
-  @Put(':id') // Update a book
-  @UsePipes(new ValidationPipe({ transform: true }))
-  updateBook(
-    @Param('id') id: string,
-    @Body() updatedBook: UpdateBookDto,
-  ): Promise<Book> {
-    return this.bookService.updateBookById(id, updatedBook);
+  @Put(':id')
+  @ApiOperation({ summary: 'Update a book by ID' })
+  @ApiResponse({ status: 200, description: 'Book updated' })
+  @ApiResponse({ status: 404, description: 'Book not found' })
+  updateBook(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
+    return this.bookService.updateBookById(id, updateBookDto);
   }
 
-  @Delete(':id') // Delete one book
-  @UsePipes(new ValidationPipe({ transform: true }))
-  deleteBook(@Param('id') id: string): Promise<void> {
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete a book by ID' })
+  @ApiResponse({ status: 204, description: 'Book deleted' })
+  @ApiResponse({ status: 404, description: 'Book not found' })
+  deleteBook(@Param('id') id: string) {
     return this.bookService.deleteBook(id);
   }
 }
