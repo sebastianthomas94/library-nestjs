@@ -1,32 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import AuthorRepository from 'src/repositories/AuthorRepository'; // Adjust import path as necessary
+import { CreateAuthorDto } from 'src/dto/CreateAuthorDto';
+import { UpdateAuthorDto } from 'src/dto/UpdateAuthorDto';
+import AuthorRepository from 'src/repositories/AuthorRepository';
+import { Author } from 'src/schema/Author.schema';
 
 @Injectable()
 export class AuthorService {
   constructor(private readonly authorRepository: AuthorRepository) {}
 
   // Retrieve all authors
-  getAllAuthors() {
+  getAllAuthors(): Promise<Author[]> {
     return this.authorRepository.getAllAuthors();
   }
 
   // Retrieve a single author by ID
-  getAuthorById(id: string) {
+  getAuthorById(id: string): Promise<Author> {
     return this.authorRepository.getAuthorById(id);
   }
 
   // Add a new author
-  addAuthor(author: any) {
+  addAuthor(author: CreateAuthorDto): Promise<Author> {
     return this.authorRepository.addAuthor(author);
   }
 
   // Update an existing author
-  updateAuthor(id: string, author: any) {
+  updateAuthor(id: string, author: UpdateAuthorDto): Promise<Author> {
     return this.authorRepository.updateAuthor(id, author);
   }
 
   // Delete an author by ID
-  deleteAuthor(id: string) {
+  deleteAuthor(id: string): Promise<void> {
     return this.authorRepository.deleteAuthor(id);
   }
 }
