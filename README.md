@@ -1,73 +1,72 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Library Management System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+The Library Management System is a full-stack application built with NestJS and MongoDB. It provides functionality to manage books and authors, allowing users to perform CRUD (Create, Read, Update, Delete) operations. The system uses the repository pattern for data management and includes robust validation, error handling, and API documentation using Swagger.
 
-## Description
+Technologies Used
+- NestJS: A progressive Node.js framework for building efficient and scalable server-side applications.
+- MongoDB: A NoSQL database for storing book and author data.
+- TypeScript: A statically typed superset of JavaScript.
+- Swagger: For API documentation and testing.
+- class-validator: For validating input data.
+- class-transformer: For transforming and validating input data.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Setup Instructions
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB: A local or remote MongoDB instance
 
 ## Installation
 
-```bash
-$ npm install
+1. Clone the repository:
+``` 
+git clone https://github.com/your-repo/library-management-system.git
+cd library-management-system
 ```
 
-## Running the app
+2. Install dependencies:
 
-```bash
-# development
-$ npm run start
+```
+npm install
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+3. Start Mongo locally
 
-```bash
-# unit tests
-$ npm run test
+4. Run the application:
+```
+npm run start
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
-## Support
+## API Documentation
+Swagger provides a user-friendly interface to interact with the API. Access the Swagger UI at:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+http://localhost:3000/api-docs
 
-## Stay in touch
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+ ## Adding Authors and Books
+### Add an Author:
 
-Nest is [MIT licensed](LICENSE).
+Use the POST /author endpoint to create a new author. Ensure that you provide the necessary details.
+
+### Add a Book:
+
+After adding an author, use the POST /book endpoint to create a new book. The authorId field in the book data should correspond to the ID of the author created earlier.
+
+### Validators Used
+class-validator is used to ensure that data sent to the API is valid. It includes:
+```
+@IsNotEmpty(): Ensures that the field is not empty.
+@IsString(): Ensures that the field is a string.
+@IsDate(): Ensures that the field is a date.
+@IsMongoId(): Ensures that the field is a valid MongoDB ObjectId.
+class-transformer is used to transform plain objects into class instances, particularly for converting string dates into Date objects.
+```
+##Repository Pattern
+The project employs the repository pattern to abstract data access logic. Repositories are used for interacting with MongoDB collections and handling CRUD operations. This separation allows for cleaner code and easier testing.
+
