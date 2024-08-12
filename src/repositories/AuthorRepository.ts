@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Author } from 'src/schema/Author.schema';
+import { Author } from '../schema/Author.schema';
 
 @Injectable()
 export default class AuthorRepository {

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Book } from 'src/schema/Book.schema';
-import BookRepository from 'src/repositories/BookRepository';
+import BookRepository from '../repositories/BookRepository';
 import { CreateBookDto } from 'src/dto/CreateBookDto';
 import { UpdateBookDto } from 'src/dto/UpdateBookDto';
-import AuthorRepository from 'src/repositories/AuthorRepository';
+import AuthorRepository from '../repositories/AuthorRepository';
 
 @Injectable()
 export class BookService {
